@@ -1,0 +1,4 @@
+../Core/Src/GPIO.c:8:6:GPIO_SET_PIN	24	static
+../Core/Src/GPIO.c:20:6:GPIO_RESET_PIN	24	static
+../Core/Src/GPIO.c:32:6:GPIO_TOGGLE_PIN	32	static
+../Core/Src/GPIO.c:47:15:GPIO_READ_PIN	24	static
