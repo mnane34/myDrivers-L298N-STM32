@@ -59,21 +59,45 @@ Converts the measured echo duration to distance in inches.
 
 You can easily test the LCD using the following code snippet
 
-<pre><code class="language-c">sensorState = HCSR04_readSensor();
-distance_cm = HCSR04_getDistance_cm(sensorState);
-distance_inch = HCSR04_getDistance_inch(sensorState);
-DELAY_MS(1);
+<pre><code class="language-c">GPIO_PinState sensorState = SENSOR_ERROR;
+float distance_cm = 0.0;
+float distance_inch = 0.0;
 
-sprintf(bufferDistance_cm, "-> %.2f cm", distance_cm);
-sprintf(bufferDistance_inch, "-> %.2f inch", distance_inch);
+char bufferDistance_cm[50];
+char bufferDistance_inch[50];
 
-LCD_clear();
-LCD_setCursor(1, 1);
-LCD_writeString(bufferDistance_cm);
-DELAY_MS(1);
-LCD_setCursor(2, 1);
-LCD_writeString(bufferDistance_inch);
-DELAY_MS(250);
+int main(void)
+{
+   HAL_Init();
+   SystemClock_Config();
+   MX_GPIO_Init();
+   HCSR04_init(GPIOC, GPIO_PIN_3, GPIOC, GPIO_PIN_2);
+   LCD_InitStruct(GPIOB, GPIO_PIN_15,
+		  GPIOB, GPIO_PIN_1,
+		  GPIOB, GPIO_PIN_2,
+		  GPIOB, GPIO_PIN_12,
+		  GPIOB, GPIO_PIN_14,
+		  GPIOB, GPIO_PIN_13);
+   LCD_clear();
+
+   while(1){
+      sensorState = HCSR04_readSensor();
+      distance_cm = HCSR04_getDistance_cm(sensorState);
+      distance_inch = HCSR04_getDistance_inch(sensorState);
+      DELAY_MS(1);
+
+      sprintf(bufferDistance_cm, "-> %.2f cm", distance_cm);
+      sprintf(bufferDistance_inch, "-> %.2f inch", distance_inch);
+
+      LCD_clear();
+      LCD_setCursor(1, 1);
+      LCD_writeString(bufferDistance_cm);
+      DELAY_MS(1);
+      LCD_setCursor(2, 1);
+      LCD_writeString(bufferDistance_inch);
+      DELAY_MS(250);
+   }
+}
 </code></pre>
 
 ![test](images/test.jpg)
