@@ -35,7 +35,7 @@ In this application, the STM32 Nucleo F446RE development board was used. You can
 # 🚀 Code Explanation
 
 <pre><code class="language-c">void HCSR04_init(volatile GPIO_TypeDef* TRIG_GPIO, volatile uint16_t TRIG_PIN, 
-                              volatile GPIO_TypeDef* ECHO_GPIO, volatile uint16_t ECHO_PIN);
+              volatile GPIO_TypeDef* ECHO_GPIO, volatile uint16_t ECHO_PIN);
 </code></pre>
 
 Initializes the HC-SR04 sensor by configuring the TRIG and ECHO pins for STM32. Sets default values for internal variables used in distance measurement.
