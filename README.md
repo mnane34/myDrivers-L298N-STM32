@@ -41,19 +41,16 @@ In this application, the STM32 Nucleo F446RE development board was used. You can
 Initializes the HC-SR04 sensor by configuring the TRIG and ECHO pins for STM32. Sets default values for internal variables used in distance measurement.
 
 <pre><code class="language-c">SensorState_t HCSR04_readSensor(void);
-
 </code></pre>
 
 Triggers the HC-SR04 sensor, measures the echo pulse duration, and updates internal variables.
 
 <pre><code class="language-c">float HCSR04_getDistance_cm(SensorState_t readingState);
-
 </code></pre>
 
 Converts the measured echo duration to distance in centimeters.
 
 <pre><code class="language-c">float HCSR04_getDistance_inch(SensorState_t readingState);
-
 </code></pre>
 
 Converts the measured echo duration to distance in inches.
@@ -62,7 +59,7 @@ Converts the measured echo duration to distance in inches.
 
 You can easily test the LCD using the following code snippet
 
-pre><code class="language-c">	  sensorState = HCSR04_readSensor();
+pre><code class="language-c">sensorState = HCSR04_readSensor();
 	  distance_cm = HCSR04_getDistance_cm(sensorState);
 	  distance_inch = HCSR04_getDistance_inch(sensorState);
 	  DELAY_MS(1);
@@ -77,7 +74,6 @@ pre><code class="language-c">	  sensorState = HCSR04_readSensor();
 	  LCD_setCursor(2, 1);
 	  LCD_writeString(bufferDistance_inch);
 	  DELAY_MS(250);
-
 </code></pre>
 
 ![test](images/test.jpg)
