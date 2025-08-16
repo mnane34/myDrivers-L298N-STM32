@@ -60,20 +60,20 @@ Converts the measured echo duration to distance in inches.
 You can easily test the LCD using the following code snippet
 
 <pre><code class="language-c">sensorState = HCSR04_readSensor();
-	  distance_cm = HCSR04_getDistance_cm(sensorState);
-	  distance_inch = HCSR04_getDistance_inch(sensorState);
-	  DELAY_MS(1);
+distance_cm = HCSR04_getDistance_cm(sensorState);
+distance_inch = HCSR04_getDistance_inch(sensorState);
+DELAY_MS(1);
 
-	  sprintf(bufferDistance_cm, "-> %.2f cm", distance_cm);
-	  sprintf(bufferDistance_inch, "-> %.2f inch", distance_inch);
+sprintf(bufferDistance_cm, "-> %.2f cm", distance_cm);
+sprintf(bufferDistance_inch, "-> %.2f inch", distance_inch);
 
-	  LCD_clear();
-	  LCD_setCursor(1, 1);
-	  LCD_writeString(bufferDistance_cm);
-	  DELAY_MS(1);
-	  LCD_setCursor(2, 1);
-	  LCD_writeString(bufferDistance_inch);
-	  DELAY_MS(250);
+LCD_clear();
+LCD_setCursor(1, 1);
+LCD_writeString(bufferDistance_cm);
+DELAY_MS(1);
+LCD_setCursor(2, 1);
+LCD_writeString(bufferDistance_inch);
+DELAY_MS(250);
 </code></pre>
 
 ![test](images/test.jpg)
