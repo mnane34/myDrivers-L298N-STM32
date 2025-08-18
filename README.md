@@ -12,16 +12,16 @@ Typically, you generate a short pulse on the TRIG pin, capture the duration of t
 
 # 🛠️ Electrical Diagram
 
-- **VCC (Pin 1)**<br>  
+- **VCC (Pin 1)** 
 Power supply pin, typically connected to +5V.
 
-- **TRIG (Pin 2)**<br>  
+- **TRIG (Pin 2)** 
 Trigger input pin. A short HIGH pulse (usually 10 µs) is sent to start the measurement.
 
-- **ECHO (Pin 3)**<br>  
+- **ECHO (Pin 3)** 
 Echo output pin. It goes HIGH for a duration proportional to the distance of the object.
 
-- **GND (Pin 4)**<br>  
+- **GND (Pin 4)** 
 Ground connection (GND). It serves as the reference voltage for the circuit.
 
 ![Shematic](images/shematic.png)
