@@ -57,7 +57,7 @@ Converts the measured echo duration to distance in inches.
 
 # 🖥️ Test Highlights
 
-You can easily test the HCSR-04 Sensor using the following code snippet
+You can easily test the HCSR-04 sensor using the following code snippet
 
 <pre><code class="language-c">#include "main.h"
 #include "HCSR-04.h"
