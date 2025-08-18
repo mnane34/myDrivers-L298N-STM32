@@ -22,7 +22,6 @@ Trigger input pin. A short HIGH pulse (usually 10 µs) is sent to start the meas
 Echo output pin. It goes HIGH for a duration proportional to the distance of the object.
 
 - **GND (Pin 4)**  
-
 Ground connection (GND). It serves as the reference voltage for the circuit.
 
 ![Shematic](images/shematic.png)
