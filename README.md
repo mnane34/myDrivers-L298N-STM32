@@ -30,7 +30,7 @@ In this application, the STM32 Nucleo F446RE development board was used. You can
 
 # 🚀 Code Explanation
 
-<pre><code class="language-c">void HCSR04_initGPIO_TypeDef* TRIG_GPIO, uint16_t TRIG_PIN, 
+<pre><code class="language-c">void HCSR04_init(GPIO_TypeDef* TRIG_GPIO, uint16_t TRIG_PIN, 
                  GPIO_TypeDef* ECHO_GPIO, uint16_t ECHO_PIN);
 </code></pre>
 
