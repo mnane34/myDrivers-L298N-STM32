@@ -2,6 +2,7 @@
 
 /* Structure Object Definition */
 HCSR04_TypeDef_t HCSR04;
+GPIO_PinState sensorState = SENSOR_ERROR;
 
 /**
  * @brief Initializes the HC-SR04 sensor with TRIG and ECHO pins.
@@ -10,8 +11,8 @@ HCSR04_TypeDef_t HCSR04;
  * @param ECHO_GPIO Pointer to ECHO GPIO port
  * @param ECHO_PIN ECHO pin number
  */
-void HCSR04_init(volatile GPIO_TypeDef* TRIG_GPIO, volatile uint16_t TRIG_PIN,
-				 volatile GPIO_TypeDef* ECHO_GPIO, volatile uint16_t ECHO_PIN){
+void HCSR04_init( GPIO_TypeDef* TRIG_GPIO,  uint16_t TRIG_PIN,
+				  	         GPIO_TypeDef* ECHO_GPIO,  uint16_t ECHO_PIN){
 
 	HCSR04.TRIG_GPIOx = TRIG_GPIO;
 	HCSR04.TRIG_PINx = TRIG_PIN;
@@ -83,7 +84,7 @@ float HCSR04_getDistance_cm(SensorState_t readingState){
 
 	SensorState_t currentState = readingState;
 
-	if(currentState == SENSOR_SUCCESS){
+	if(currentState == SENSOR_SUCCESS){ // calculate distance as centimeter
 		HCSR04.distance1 = HCSR04.duration / 58.0;
 	}
 	else{
@@ -102,7 +103,7 @@ float HCSR04_getDistance_inch(SensorState_t readingState){
 
 	SensorState_t currentState = readingState;
 
-	if(currentState == SENSOR_SUCCESS){
+	if(currentState == SENSOR_SUCCESS){ // calculate distance as inch
 		HCSR04.distance2 = HCSR04.duration / 148.0;
 	}
 	else{

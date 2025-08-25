@@ -73,12 +73,12 @@ int main(void)
    SystemClock_Config();
    MX_GPIO_Init();
    HCSR04_init(GPIOC, GPIO_PIN_3, GPIOC, GPIO_PIN_2);
-   LCD_InitStruct(GPIOB, GPIO_PIN_15,
-		          GPIOB, GPIO_PIN_1,
-		          GPIOB, GPIO_PIN_2,
-		          GPIOB, GPIO_PIN_12,
-		          GPIOB, GPIO_PIN_14,
-		          GPIOB, GPIO_PIN_13);
+   LCD_init(GPIOB, GPIO_PIN_15,
+		       GPIOB, GPIO_PIN_1,
+		       GPIOB, GPIO_PIN_2,
+		       GPIOB, GPIO_PIN_12,
+		       GPIOB, GPIO_PIN_14,
+		       GPIOB, GPIO_PIN_13);
    LCD_clear();
 
    while(1){

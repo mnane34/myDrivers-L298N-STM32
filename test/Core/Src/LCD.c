@@ -24,12 +24,12 @@ LCD_TypeDef_t LCD;
  * @param RS_GPIO GPIO port for Register Select (RS) pin
  * @param RS_PIN  Pin number for Register Select (RS) pin
  */
-void LCD_InitStruct(volatile GPIO_TypeDef* D4_GPIO, volatile uint16_t D4_PIN,
-					volatile GPIO_TypeDef* D5_GPIO, volatile uint16_t D5_PIN,
-					volatile GPIO_TypeDef* D6_GPIO, volatile uint16_t D6_PIN,
-					volatile GPIO_TypeDef* D7_GPIO, volatile uint16_t D7_PIN,
-					volatile GPIO_TypeDef* EN_GPIO, volatile uint16_t EN_PIN,
-					volatile GPIO_TypeDef* RS_GPIO, volatile uint16_t RS_PIN){
+void LCD_init( GPIO_TypeDef*  D4_GPIO, uint16_t  D4_PIN,
+					  GPIO_TypeDef*  D5_GPIO, uint16_t  D5_PIN,
+					  GPIO_TypeDef*  D6_GPIO, uint16_t  D6_PIN,
+					  GPIO_TypeDef*  D7_GPIO, uint16_t  D7_PIN,
+					  GPIO_TypeDef*  EN_GPIO, uint16_t  EN_PIN,
+					  GPIO_TypeDef*  RS_GPIO, uint16_t  RS_PIN){
 
 	LCD.DATA4_GPIOx = D4_GPIO; // saving LCD parameters to base structure
 	LCD.DATA4_PINx  = D4_PIN;
@@ -49,28 +49,31 @@ void LCD_InitStruct(volatile GPIO_TypeDef* D4_GPIO, volatile uint16_t D4_PIN,
 	LCD.RS_GPIOx = RS_GPIO;
 	LCD.RS_PINx  = RS_PIN;
 
-	while(HAL_GetTick() < 50); // according to datasheet of LCD, we have to wait 40-50ms before the initialization
+	DELAY_MS(50); // according to datasheet of LCD, we have to wait 40-50ms before the initialization
 	GPIO_RESET_PIN(LCD.RS_GPIOx, LCD.RS_PINx); // clear RS and EN pin
 	GPIO_RESET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
 
-	LCD_DATA(0x00); // configuration commands
+	LCD_data(0x00); // configuration commands
 	DELAY_MS(150);
-	LCD_CMD(0x03);
+	LCD_cmd(0x03);
 	DELAY_MS(5);
-	LCD_CMD(0x03);
+	LCD_cmd(0x03);
 	DELAY_MS(5);
-	LCD_CMD(0x03);
+	LCD_cmd(0x03);
 	DELAY_US(150);
 
-	LCD_CMD(0x02);
-	LCD_CMD(0x02);
-	LCD_CMD(0x08);
-	LCD_CMD(0x00);
-	LCD_CMD(0x0C);
-	LCD_CMD(0x00);
-	LCD_CMD(0x06);
-	LCD_CMD(0x00);
-	LCD_CMD(0x01);
+	LCD_cmd(0x02); 	// 4-bit mode
+	LCD_cmd(0x02);
+	LCD_cmd(0x08);
+
+	LCD_cmd(0x00); // display on
+	LCD_cmd(0x0C);
+
+	LCD_cmd(0x00); 	// entry mode
+	LCD_cmd(0x06);
+
+	LCD_cmd(0x00); 	// clear
+	LCD_cmd(0x01);
 }
 
 /**
@@ -78,7 +81,7 @@ void LCD_InitStruct(volatile GPIO_TypeDef* D4_GPIO, volatile uint16_t D4_PIN,
  *
  * @param data 4-bit value to send (lower nibble used)
  */
-void LCD_DATA(unsigned char data){
+void LCD_data(unsigned char data){
 
 	if(data & 1){
 		GPIO_SET_PIN(LCD.DATA4_GPIOx,   LCD.DATA4_PINx);
@@ -117,10 +120,10 @@ void LCD_DATA(unsigned char data){
  *
  * @param cmd 4-bit command to send
  */
-void LCD_CMD(unsigned char cmd){
+void LCD_cmd(unsigned char cmd){
 
 	GPIO_RESET_PIN(LCD.RS_GPIOx, LCD.RS_PINx); // sending a gpio pulse for trigging the data commands
-	LCD_DATA(cmd);
+	LCD_data(cmd);
 	GPIO_RESET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
 	DELAY_US(5);
 	GPIO_SET_PIN(LCD.EN_GPIOx,   LCD.EN_PINx);
@@ -131,11 +134,12 @@ void LCD_CMD(unsigned char cmd){
 
 /**
  * @brief Clears the LCD screen and resets cursor position
+ * @param void
  */
-void LCD_clear(){
+void LCD_clear(void){
 
-	LCD_CMD(0);
-	LCD_CMD(1);
+	LCD_cmd(0);
+	LCD_cmd(1);
 	DELAY_MS(2);
 }
 
@@ -151,7 +155,6 @@ void LCD_setCursor(unsigned char row, unsigned char column){
 
 	if(row == 1){
 		temp = 0x80 + column - 1; // according to datasheet of LCD, we determine the row (1 or 2)
-
 	}
 	else if(row == 2){
 		temp = 0xC0 + column - 1;
@@ -159,8 +162,8 @@ void LCD_setCursor(unsigned char row, unsigned char column){
 
 	high4 = temp >> 4; // conversion to 4-bit type
 	low4 = temp & 0x0F;
-	LCD_CMD(high4);
-	LCD_CMD(low4);
+	LCD_cmd(high4);
+	LCD_cmd(low4);
 }
 
 /**
@@ -178,7 +181,7 @@ void LCD_writeChar(char data){
 
 	GPIO_SET_PIN(LCD.RS_GPIOx, LCD.RS_PINx);
 
-	LCD_DATA(high4 >> 4);
+	LCD_data(high4 >> 4);
 	GPIO_RESET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
 	DELAY_US(5);
 	GPIO_SET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
@@ -186,7 +189,7 @@ void LCD_writeChar(char data){
 	GPIO_RESET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
 	DELAY_US(100);
 
-	LCD_DATA(low4);
+	LCD_data(low4);
 	GPIO_RESET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
 	DELAY_US(5);
 	GPIO_SET_PIN(LCD.EN_GPIOx, LCD.EN_PINx);
@@ -202,29 +205,29 @@ void LCD_writeChar(char data){
  *
  * @param str Pointer to the null-terminated string
  */
-void LCD_writeString(char *str){
+void LCD_writeString(const char *str){
 
-	int i;
-
-	for(i=0; str[i]!='\0'; i++){
+	for(int i=0; str[i]!='\0'; i++){
 		LCD_writeChar(str[i]);
 	}
 }
 
 /**
  * @brief Shifts the entire LCD display to the left
+ * @param void
  */
-void LCD_shiftLeft(){
+void LCD_shiftLeft(void){
 
-	LCD_CMD(0x01);
-	LCD_CMD(0x08);
+	LCD_cmd(0x01);
+	LCD_cmd(0x08);
 }
 
 /**
  * @brief Shifts the entire LCD display to the right
+ * @param void
  */
-void LCD_shiftRight(){
+void LCD_shiftRight(void){
 
-	LCD_CMD(0x01);
-	LCD_CMD(0x0C);
+	LCD_cmd(0x01);
+	LCD_cmd(0x0C);
 }

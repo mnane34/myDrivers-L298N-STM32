@@ -22,10 +22,17 @@
 #define HIGH 	1
 #define LOW 	0
 
+/* GPIO Pin State Definitions */
+typedef enum
+{
+  logicLow = 0,
+  logicHigh = 1
+}GPIO_pinState_t;
+
 /* GPIO Direct Register Access Functions */
-void GPIO_SET_PIN(volatile GPIO_TypeDef* GPIOx, volatile uint16_t GPIO_Pin);
-void GPIO_RESET_PIN(volatile GPIO_TypeDef* GPIOx, volatile uint16_t GPIO_Pin);
-void GPIO_TOGGLE_PIN(volatile GPIO_TypeDef* GPIOx, volatile uint16_t GPIO_Pin);
-GPIO_PinState GPIO_READ_PIN(volatile GPIO_TypeDef* GPIOx, volatile uint16_t GPIO_Pin);
+void GPIO_SET_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void GPIO_RESET_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void GPIO_TOGGLE_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+GPIO_pinState_t GPIO_READ_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 #endif

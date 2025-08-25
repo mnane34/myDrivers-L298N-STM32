@@ -32,7 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-GPIO_PinState sensorState = SENSOR_ERROR;
+extern GPIO_PinState sensorState;
 float distance_cm = 0.0;
 float distance_inch = 0.0;
 
@@ -95,12 +95,12 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HCSR04_init(GPIOC, GPIO_PIN_3, GPIOC, GPIO_PIN_2);
 
-  LCD_InitStruct(GPIOB, GPIO_PIN_15,
-		         	 	  GPIOB, GPIO_PIN_1,
-						  GPIOB, GPIO_PIN_2,
-						  GPIOB, GPIO_PIN_12,
-						  GPIOB, GPIO_PIN_14,
-						  GPIOB, GPIO_PIN_13);
+  LCD_init(GPIOB, GPIO_PIN_15,
+		        GPIOB, GPIO_PIN_1,
+				GPIOB, GPIO_PIN_2,
+				GPIOB, GPIO_PIN_12,
+				GPIOB, GPIO_PIN_14,
+				GPIOB, GPIO_PIN_13);
   LCD_clear();
   /* USER CODE END 2 */
 
@@ -126,6 +126,7 @@ int main(void)
 	  LCD_setCursor(2, 1);
 	  LCD_writeString(bufferDistance_inch);
 	  DELAY_MS(250);
+
   }
   /* USER CODE END 3 */
 }
