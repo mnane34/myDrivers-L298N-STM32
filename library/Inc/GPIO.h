@@ -1,5 +1,5 @@
 /**
- * @file    GPIO.h
+ * @file      GPIO.h
  * @brief   Base Direct Register Access to Control GPIO Pins for STM32
  * @author  Mertcan NANE
  * @date    2025-08-09
@@ -32,7 +32,11 @@ typedef enum
 /* GPIO Direct Register Access Functions */
 void GPIO_SET_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 void GPIO_RESET_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void GPIO_WRITE_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, uint8_t logicState);
 void GPIO_TOGGLE_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 GPIO_pinState_t GPIO_READ_PIN(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+
+void GPIO_INIT_PIN_INPUT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
+void GPIO_INIT_PIN_OUTPUT(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin);
 
 #endif
