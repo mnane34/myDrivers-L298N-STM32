@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := myDrivers_HCSR-04
+BUILD_ARTIFACT_NAME := myDrivers_L298N_Motor
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-myDrivers_HCSR-04.elf \
+myDrivers_L298N_Motor.elf \
 
 MAP_FILES += \
-myDrivers_HCSR-04.map \
+myDrivers_L298N_Motor.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-myDrivers_HCSR-04.list \
+myDrivers_L298N_Motor.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: myDrivers_HCSR-04.elf secondary-outputs
+main-build: myDrivers_L298N_Motor.elf secondary-outputs
 
 # Tool invocations
-myDrivers_HCSR-04.elf myDrivers_HCSR-04.map: $(OBJS) $(USER_OBJS) D:\embedded\stm32\embeddedDrivers\myDrivers_HCSR-04\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "myDrivers_HCSR-04.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\embedded\stm32\embeddedDrivers\myDrivers_HCSR-04\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="myDrivers_HCSR-04.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+myDrivers_L298N_Motor.elf myDrivers_L298N_Motor.map: $(OBJS) $(USER_OBJS) D:\embedded\stm32\embeddedDrivers\myDrivers_L298N_Motor\STM32F446RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "myDrivers_L298N_Motor.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\embedded\stm32\embeddedDrivers\myDrivers_L298N_Motor\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="myDrivers_L298N_Motor.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,14 +70,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-myDrivers_HCSR-04.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "myDrivers_HCSR-04.list"
+myDrivers_L298N_Motor.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "myDrivers_L298N_Motor.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) default.size.stdout myDrivers_HCSR-04.elf myDrivers_HCSR-04.list myDrivers_HCSR-04.map
+	-$(RM) default.size.stdout myDrivers_L298N_Motor.elf myDrivers_L298N_Motor.list myDrivers_L298N_Motor.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)

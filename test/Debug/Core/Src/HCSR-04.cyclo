@@ -1,4 +1,0 @@
-../Core/Src/HCSR-04.c:14:6:HCSR04_init	1
-../Core/Src/HCSR-04.c:34:15:HCSR04_readSensor	13
-../Core/Src/HCSR-04.c:83:7:HCSR04_getDistance_cm	2
-../Core/Src/HCSR-04.c:102:7:HCSR04_getDistance_inch	2
