@@ -48,3 +48,79 @@ Motor power supply pin. Provides power for the motors (typically 7V–12V).
 In this application, the STM32 Nucleo F446RE development board was used. You can refer to the above wiring diagram.
 
 # 🚀 Code Explanation
+
+<pre><code class="language-c">uint32_t POT_read(ADC_HandleTypeDef *hadc);
+</code></pre>
+
+This function starts an ADC conversion, reads the potentiometer value if available, and returns the result.
+
+<pre><code class="language-c">uint32_t POT_map(uint32_t value, long inMin, long inMax, long outMin, long outMax);
+</code></pre>
+
+This function maps the potentiometer’s ADC value from an input range to a desired output range.
+
+<pre><code class="language-c">void L298N_init(TIM_HandleTypeDef * hTIMx);
+</code></pre>
+
+This function initializes the L298N motor driver by starting PWM on the specified timer channel.
+
+<pre><code class="language-c">void L298N_setPWM(TIM_HandleTypeDef * hTIMx, uint32_t xChannel, uint16_t xDuty);
+</code></pre>
+
+This function sets the PWM duty cycle for the L298N motor driver on the specified timer channel.
+
+<pre><code class="language-c">void L298N_setDirection(L298N_Direction_t direction);
+</code></pre>
+
+This function sets the rotation direction of the motor by controlling the L298N input pins.
+
+# 🖥️ Test Highlights
+
+You can easily test the L298N Motor Driver Module using the following code snippet
+
+<pre><code class="language-c">#include "main.h"
+#include "POT.h"
+#include "L298N.h"
+
+ADC_HandleTypeDef hadc1;
+TIM_HandleTypeDef htim2;
+
+extern L298N_Direction_t motorDirection;
+uint32_t potValue;
+uint32_t dutyValue;
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM2_Init(void);
+static void MX_ADC1_Init(void);
+
+int main(void)
+{
+  HAL_Init();
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_TIM2_Init();
+  MX_ADC1_Init();
+  L298N_init(&htim2);
+  while (1)
+  {
+     potValue = POT_read(&hadc1);
+     dutyValue = POT_map(potValue, 0, 4095, 0, 100);
+     motorDirection = LEFT;
+     L298N_setDirection(motorDirection);
+     L298N_setPWM(&htim2,TIM_CHANNEL_1, dutyValue);
+  }
+}
+</code></pre>
+
+![test](images/test.jpg)
+
+## 🎉 Thank You for Reviewing!
+
+Thank you for taking the time to check out this project.
+
+Feel free to follow me on these platforms for more updates and projects.
+
+- YouTube: @mnane34
+
+- LinkedIn: Mertcan Nane
