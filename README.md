@@ -49,7 +49,7 @@ In this application, the STM32 Nucleo F446RE development board was used. You can
 
 # 🚀 Code Explanation
 
-<pre><code class="language-c">uint32_t POT_read(ADC_HandleTypeDef *hadc);
+<pre><code class="language-c">uint32_t POT_read(ADC_HandleTypeDef* hadc);
 </code></pre>
 
 This function starts an ADC conversion, reads the potentiometer value if available, and returns the result.
@@ -59,12 +59,12 @@ This function starts an ADC conversion, reads the potentiometer value if availab
 
 This function maps the potentiometer’s ADC value from an input range to a desired output range.
 
-<pre><code class="language-c">void L298N_init(TIM_HandleTypeDef * hTIMx);
+<pre><code class="language-c">void L298N_init(TIM_HandleTypeDef* hTIMx);
 </code></pre>
 
 This function initializes the L298N motor driver by starting PWM on the specified timer channel.
 
-<pre><code class="language-c">void L298N_setPWM(TIM_HandleTypeDef * hTIMx, uint32_t xChannel, uint16_t xDuty);
+<pre><code class="language-c">void L298N_setPWM(TIM_HandleTypeDef* hTIMx, uint32_t xChannel, uint16_t xDuty);
 </code></pre>
 
 This function sets the PWM duty cycle for the L298N motor driver on the specified timer channel.
